@@ -140,14 +140,18 @@ export function ProHomePage() {
       if (!data) return []
       // Benzersiz müşterileri döndür
       const seen = new Set<string>()
-      return data
-        .filter((r: { customer_id: string }) => {
+      interface CustomerRow {
+        customer_id: string
+        profiles: { full_name: string; avatar_url: string | null; created_at: string } | null
+      }
+      return (data as CustomerRow[])
+        .filter((r) => {
           if (seen.has(r.customer_id)) return false
           seen.add(r.customer_id)
           return true
         })
         .slice(0, 10)
-        .map((r: { customer_id: string; profiles: { full_name: string; avatar_url: string | null; created_at: string } | null }) => ({
+        .map((r) => ({
           id: r.customer_id,
           full_name: r.profiles?.full_name ?? 'Müşteri',
           avatar_url: r.profiles?.avatar_url ?? null,

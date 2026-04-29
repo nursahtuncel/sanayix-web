@@ -208,7 +208,7 @@ export function ProProfilePage() {
     },
   })
 
-  const { data: mySanayiIds } = useQuery<string[]>({
+  const { data: mySanayiIds } = useQuery<string[], Error>({
     queryKey: ['my-sanayis', user?.id],
     queryFn: async () => {
       const { data } = await supabase
@@ -218,10 +218,10 @@ export function ProProfilePage() {
       return (data ?? []).map((r: { sanayi_id: string }) => r.sanayi_id)
     },
     enabled: !!user,
-    onSuccess: (ids) => {
+    onSuccess: (ids: string[]) => {
       if (!editingSanayis) setSelectedSanayiIds(new Set(ids))
     },
-  } as Parameters<typeof useQuery>[0])
+  })
 
   const mySanayis = useMemo(
     () => (allSanayis ?? []).filter((s) => (mySanayiIds ?? []).includes(s.id)),

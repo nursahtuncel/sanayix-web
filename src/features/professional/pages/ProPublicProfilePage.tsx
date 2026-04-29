@@ -83,7 +83,10 @@ export function ProPublicProfilePage() {
         .from('professional_sanayis')
         .select('sanayis(name, district)')
         .eq('professional_id', id!)
-      return (data ?? []).map((r: { sanayis: { name: string; district: string } | null }) => r.sanayis).filter(Boolean) as { name: string; district: string }[]
+      interface SanayiRow {
+        sanayis: { name: string; district: string } | null
+      }
+      return ((data ?? []) as SanayiRow[]).map((r) => r.sanayis).filter(Boolean) as { name: string; district: string }[]
     },
     enabled: !!id,
   })
