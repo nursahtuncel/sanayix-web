@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  VITE_SUPABASE_URL = "https://irdlwwrrkfiohnmpvhqh.supabase.co"
+  VITE_VAPID_PUBLIC_KEY = "BKp0L1cpZGZq85Xi6P6mRBzstn_lqaLRKP3Yyni-gooqIEd6f9BvbIcp08Byz-V5DyaTm1wyICgXqaR4luc67AU"
