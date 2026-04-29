@@ -86,7 +86,7 @@ export function ProPublicProfilePage() {
       interface SanayiRow {
         sanayis: { name: string; district: string } | null
       }
-      return ((data ?? []) as SanayiRow[]).map((r) => r.sanayis).filter(Boolean) as { name: string; district: string }[]
+      return ((data ?? []) as unknown as SanayiRow[]).map((r) => r.sanayis).filter(Boolean) as { name: string; district: string }[]
     },
     enabled: !!id,
   })

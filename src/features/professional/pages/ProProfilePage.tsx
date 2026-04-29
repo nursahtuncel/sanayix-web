@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -218,10 +218,13 @@ export function ProProfilePage() {
       return (data ?? []).map((r: { sanayi_id: string }) => r.sanayi_id)
     },
     enabled: !!user,
-    onSuccess: (ids: string[]) => {
-      if (!editingSanayis) setSelectedSanayiIds(new Set(ids))
-    },
   })
+
+  useEffect(() => {
+    if (mySanayiIds && !editingSanayis) {
+      setSelectedSanayiIds(new Set(mySanayiIds))
+    }
+  }, [mySanayiIds, editingSanayis])
 
   const mySanayis = useMemo(
     () => (allSanayis ?? []).filter((s) => (mySanayiIds ?? []).includes(s.id)),

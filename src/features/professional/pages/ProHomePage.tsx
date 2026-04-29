@@ -144,7 +144,7 @@ export function ProHomePage() {
         customer_id: string
         profiles: { full_name: string; avatar_url: string | null; created_at: string } | null
       }
-      return (data as CustomerRow[])
+      return (data as unknown as CustomerRow[])
         .filter((r) => {
           if (seen.has(r.customer_id)) return false
           seen.add(r.customer_id)
